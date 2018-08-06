@@ -1,6 +1,6 @@
 bin_PROGRAMS = memcached
 pkginclude_HEADERS = protocol_binary.h
-noinst_PROGRAMS = memcached-debug sizes testapp timedrun
+noinst_PROGRAMS = memcached-debug memcached-dune sizes testapp timedrun
 
 BUILT_SOURCES=
 
@@ -52,6 +52,10 @@ memcached_SOURCES += extstore.c extstore.h \
                      storage.c storage.h \
                      slab_automove_extstore.c slab_automove_extstore.h
 endif
+
+memcached_dune_SOURCES = $(memcached_SOURCES)
+memcached_dune_LDADD = -L../../../linux/dune/libdune -ldune
+memcached_dune_CFLAGS = -DDUNE_ENABLED
 
 memcached_debug_SOURCES = $(memcached_SOURCES)
 memcached_CPPFLAGS = -DNDEBUG

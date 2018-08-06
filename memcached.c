@@ -67,6 +67,14 @@
 #endif
 #endif
 
+//ustiugov
+//#define DUNE_ENABLED
+
+#ifdef DUNE_ENABLED
+    #include "../../../linux/dune/libdune/dune.h"
+    #include "../../../linux/dune/libdune/cpu-x86.h"
+#endif
+
 /*
  * forward declarations
  */
@@ -6532,6 +6540,20 @@ static bool _parse_slab_sizes(char *s, uint32_t *slab_sizes) {
 }
 
 int main (int argc, char **argv) {
+#ifdef DUNE_ENABLED
+  volatile int ret;
+
+  printf("hello: not running dune yet\n");
+
+  ret = dune_init_and_enter();
+  if (ret) {
+      printf("failed to initialize dune\n");
+      return ret;
+  }
+
+  printf("hello: now printing from dune mode\n");
+#endif
+
     int c;
     bool lock_memory = false;
     bool do_daemonize = false;
